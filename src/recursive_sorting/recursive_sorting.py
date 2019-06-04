@@ -1,51 +1,38 @@
-# TO-DO: complete the helpe function below to merge 2 sorted arrays
+# TO-DO: complete the helper function below to merge 2 sorted arrays
 def merge(arrA, arrB):
-    elements = len(arrA) + len(arrB)
-    merged_arr = [0] * elements
-    # TO-DO
+    merged_arr = []
 
+    for i in range(len(arrA) + len(arrB)):
+        if len(arrA) == 0:
+            merged_arr += arrB
+            break
+        elif len(arrB) == 0:
+            merged_arr += arrA
+            break
+        elif arrA[0] > arrB[0]:
+            merged_arr.append(arrB.pop(0))
+        else:
+            merged_arr.append(arrA.pop(0))
     return merged_arr
 
-
 # TO-DO: implement the Merge Sort function below USING RECURSION
+
+
 def merge_sort(arr):
     if len(arr) > 1:
-        mid = len(arr)//2  # Finding the mid of the array
-        L = arr[:mid]  # Dividing the array elements
-        R = arr[mid:]  # into 2 halves
+        mid = len(arr)//2
+        left = merge_sort(arr[0:mid])  # Dividing the array elements
+        right = merge_sort(arr[mid:])  # into 2 halves
 
-        merge_sort(L)  # Sorting the first half
-        merge_sort(R)  # Sorting the second half
-
-        i = j = k = 0
-
-        # Copy data to temp arrays L[] and R[]
-        while i < len(L) and j < len(R):
-            if L[i] < R[j]:
-                arr[k] = L[i]
-                i += 1
-            else:
-                arr[k] = R[j]
-                j += 1
-            k += 1
-
-        # Checking if any element was left
-        while i < len(L):
-            arr[k] = L[i]
-            i += 1
-            k += 1
-
-        while j < len(R):
-            arr[k] = R[j]
-            j += 1
-            k += 1
+        # Merge sorted pieces together
+        arr = merge(left, right)
 
     return arr
 
-
-print(merge_sort([7, 10, 9, 6, 3, 2]))
-
 # STRETCH: implement an in-place merge sort algorithm
+
+
+print(merge_sort([3, 4, 7, 8, 10]))
 
 
 def merge_in_place(arr, start, mid, end):
